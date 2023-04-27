@@ -1,6 +1,7 @@
 # ChatMier
 一个美观流畅的ChatGPT提示网站，帮助你学习如何进行高质量提问。
-by [GentleLemon](https://github.com/GentleLemon)
+by [GentleLemon](https://github.com/GentleLemon)  
+
 ![示例2](img/frontend_01.png)
 
 ## 环境
@@ -9,7 +10,7 @@ by [GentleLemon](https://github.com/GentleLemon)
 - Node: 18.16.0
 
 ## 克隆项目  
-git clone https://github.com/GentleLemon/chatmier-prompt.git  
+git clone https://github.com/GentleLemon/prompt-web.git  
 
 安装 virtualenv 包：  
 sudo apt install python3-venv  
@@ -27,7 +28,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 ## 后端服务
-cd chatmier_backend  
+cd prompt_backend  
 
 ### 数据库迁移  
 python manage.py makemigrations  
@@ -48,7 +49,7 @@ http://127.0.0.1:8000/admin
 ![示例1](img/backend_01.png)
 
 ## 前端服务
-cd chatmier_frontend  
+cd prompt_frontend  
 
 ### 安装 Node.js 和 npm  
 sudo apt update  
