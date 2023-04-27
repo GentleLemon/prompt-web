@@ -15,6 +15,7 @@ class PromptSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'title',
+            'description',
             'position_salary',
             'position_location',
             'company_name',

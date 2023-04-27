@@ -8,12 +8,13 @@
             <h1 class="mb-12 text-5xl text-white">优秀的ChatGPT提示</h1>
 
             <NuxtLink to="/browse" class="inline-block py-4 px-8 bg-teal-900 text-white rounded-xl">Browse</NuxtLink>
+<!--            <NuxtLink to="/about" class="inline-block py-4 px-8 bg-teal-900 text-white rounded-xl">About</NuxtLink>-->
         </div>
 
         <div class="py-10 px-6">
-            <h2 class="mb-8 text-2xl text-center">Newest prompts</h2>
+            <h2 class="mb-8 text-2xl text-center">最常用的提示</h2>
 
-            <div class="flex flex-row space-x-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <Prompt
                     v-for="prompt in prompts"
                     v-bind:key="prompt.id"
@@ -25,12 +26,11 @@
                     </div>
                 </Prompt>
             </div>
-
-
         </div>
 
     </div>
 </template>
+
 
 <style scoped>
 .prompt-container {

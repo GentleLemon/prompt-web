@@ -17,6 +17,7 @@ class CategoriesView(APIView):
 
 class NewestPromptsView(APIView):
     def get(self, request, format=None):
+        # 获取最新的 4 个 Prompt 对象
         prompts = Prompt.objects.all()[0:4]
         serializer = PromptSerializer(prompts, many=True)
 
