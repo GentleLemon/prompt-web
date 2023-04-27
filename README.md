@@ -1,6 +1,5 @@
 # prompt
 一个美观流畅的ChatGPT提示网站，帮助你学习如何进行高质量提问。
-
 by [GentleLemon](https://github.com/GentleLemon)
 
 ![示例2](img/frontend_01.png)
