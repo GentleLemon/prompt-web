@@ -32,7 +32,7 @@ async function deletePrompt(id) {
     })
 }
 
-async function copyContent() {
+async function copy() {
     try {
         await navigator.clipboard.writeText(prompt.description)
         alert('Content copied to clipboard')
@@ -45,26 +45,106 @@ async function copyContent() {
 </script>
 
 <template>
-    <div class="p-6 bg-gray-100 rounded-xl shadow-md">
-        <div class="flex items-center justify-between mb-4">
-            <div>
-                <h3 class="mb-2 text-xl font-semibold">{{ prompt.title }}</h3>
-                <p class="text-gray-600">{{ prompt.category }}</p>
-            </div>
-            <p>Posted {{ prompt.created_at }} by {{ prompt.company_name }}</p>
-        </div>
+  <div class="p-6 bg-gray-100 rounded-xl shadow-md relative">
 
-        <div class="mb-4">
-            <p>{{ prompt.description }}</p>
-        </div>
-
-        <div class="flex items-center space-x-4">
-            <button @click="copyContent" class="py-2 px-4 bg-blue-500 text-white rounded-lg">
-                Copy Content
-            </button>
-            <NuxtLink v-bind:to="'/browse/' + prompt.id" class="py-2 px-4 bg-teal-700 text-white rounded-lg">Details</NuxtLink>
-            <NuxtLink v-bind:to="'/editprompt/' + prompt.id" class="py-2 px-4 bg-cyan-700 text-white rounded-lg" v-if="my">Edit</NuxtLink>
-            <button @click="deletePrompt(prompt.id)" class="py-2 px-4 bg-rose-700 text-white rounded-lg" v-if="my">Delete</button>
-        </div>
+    <div class="absolute line-clamp-1 top-1 right-1">
+      <button
+        @click="copy"
+        :class="copyButtonClass"
+        :disabled="copySuccess"
+        class="text-sm py-1 px-1 rounded-lg"
+      >
+        {{ copyButtonText }}
+      </button>
     </div>
+
+    <div class="mb-4">
+      <h3 class="line-clamp-1 text-xl font-semibold">
+        {{ prompt.title }}
+      </h3>
+      <p class="text-gray-600">{{ prompt.category }}</p>
+    </div>
+
+    <div class="mb-4 flex-1">
+      <p class="line-clamp-7">{{ prompt.description }}</p>
+    </div>
+
+    <div class="absolute bottom-4 left-4">
+      <p class="inline-block mr-4">
+        Posted {{ prompt.created_at }} by {{ prompt.company_name }}
+      </p>
+    </div>
+
+    <div class="absolute bottom-4 right-4">
+      <NuxtLink
+        v-bind:to="'/browse/' + prompt.id"
+        class="text-sm py-1 px-2 bg-teal-700 text-white rounded-lg"
+      >
+        Details
+      </NuxtLink>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.line-clamp-7 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
+  overflow: hidden;
+}
+
+button:focus {
+  outline: none;
+}
+</style>
+
+<script>
+export default {
+  props: ['prompt', 'my'],
+  data() {
+    return {
+      fullTextVisible: false,
+      copySuccess: false,
+      copyButtonText: 'Copy',
+    };
+  },
+  computed: {
+    copyButtonClass() {
+      return this.copySuccess
+        ? 'bg-green-500 text-white'
+        : 'bg-indigo-500 text-white';
+    },
+  },
+  methods: {
+    toggleTextOverflow() {
+      this.fullTextVisible = !this.fullTextVisible;
+    },
+    copy() {
+      // ... 复制内容的方法
+      this.copySuccess = true;
+      this.copyButtonText = '✔️ Copied';
+
+      setTimeout(() => {
+        this.copySuccess = false;
+        this.copyButtonText = 'Copy';
+      }, 2000);
+    },
+    // ... 其他方法
+  },
+};
+</script>

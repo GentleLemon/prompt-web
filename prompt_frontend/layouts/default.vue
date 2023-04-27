@@ -37,8 +37,8 @@ function logout() {
             <slot />
         </div>
 
-        <footer class="p-6 flex items-center justify-between bg-gray-900">
-            <p class="text-gray-300">Copyright (c) 2023 - ChatGPT提示</p>
+        <footer class="p-6 flex items-center justify-center text-white bg-gray-900">
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">苏ICP备***号-1</a>
         </footer>
     </div>
 </template>
