@@ -3,6 +3,8 @@
 
 by [GentleLemon](https://github.com/GentleLemon)
 
+![示例2](img/frontend_01.png)
+
 ## 环境
 - Python: 3.10
 - Nuxt: 3
