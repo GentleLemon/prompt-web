@@ -19,6 +19,7 @@
     "vue": "latest"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.0.17",
     "@pinia/nuxt": "^0.4.9",
     "pinia": "^2.0.35"
   }

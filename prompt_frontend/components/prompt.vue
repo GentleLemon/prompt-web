@@ -1,5 +1,9 @@
 <script setup>
 import { useUserStore } from '@/stores/user'
+import { ref, computed } from 'vue'
+import { ClipboardIcon } from "@heroicons/vue/24/outline"
+
+
 
 const userStore = useUserStore()
 
@@ -13,6 +17,9 @@ const props = defineProps({
         type: [Object]
     }
 })
+
+const { prompt } = props // 解构 prompt 属性，用于访问 prompt 对象的属性
+
 
 async function deletePrompt(id) {
     await $fetch('http://127.0.0.1:8000/api/v1/prompts/' + id + '/delete/', {
@@ -34,51 +41,59 @@ async function deletePrompt(id) {
 
 async function copy() {
     try {
-        await navigator.clipboard.writeText(prompt.description)
-        alert('Content copied to clipboard')
+        await navigator.clipboard.writeText(prompt.description) // 使用解构后的 prompt 变量
+        copySuccess.value = true;
+        copyButtonText.value = '✔ 已复制!'
+        setTimeout(() => {
+            copySuccess.value = false
+            copyButtonText.value = '复制'
+        }, 2000)
     } catch (err) {
         console.error('Failed to copy text: ', err)
     }
 }
 
+const copySuccess = ref(false)
+const copyButtonText = ref('复制')
+const copyButtonClass = computed(() => {
+    return copySuccess.value ? 'bg-green-500 text-white' : 'bg-gray-800 text-white'
+})
 
 </script>
 
-<template>
-  <div class="p-6 bg-gray-100 rounded-xl shadow-md relative">
 
-    <div class="absolute line-clamp-1 top-1 right-1">
+
+<template>
+  <div class="relative p-3 bg-gray-100 rounded-xl shadow-md flex flex-col h-full hover:shadow-lg transition-shadow">
+    <div class="absolute top-3 right-3 flex items-center">
       <button
         @click="copy"
         :class="copyButtonClass"
         :disabled="copySuccess"
-        class="text-sm py-1 px-1 rounded-lg"
+        class="text-sm py-2 px-2 rounded-lg flex items-center"
       >
-        {{ copyButtonText }}
+        <ClipboardIcon class="h-4 w-5 mr-1" /><span class="text-xs ml-1">{{ copyButtonText }}</span>
       </button>
     </div>
 
-    <div class="mb-4">
-      <h3 class="line-clamp-1 text-xl font-semibold">
-        {{ prompt.title }}
+    <div class="mb-2">
+      <h3 class="text-xl font-semibold">
+        {{ prompt.category.title }}
       </h3>
-      <p class="text-gray-600">{{ prompt.category }}</p>
+      <p class="text-gray-600 line-clamp-2">{{ prompt.title }}</p>
     </div>
 
-    <div class="mb-4 flex-1">
-      <p class="line-clamp-7">{{ prompt.description }}</p>
+    <div class="mb-4">
+      <p class="line-clamp-4">{{ prompt.description }}</p>
     </div>
 
-    <div class="absolute bottom-4 left-4">
-      <p class="inline-block mr-4">
-        Posted {{ prompt.created_at }} by {{ prompt.company_name }}
+    <div class="mt-auto flex justify-between items-center">
+      <p class="text-sm text-gray-500">
+        {{ prompt.created_at }} | {{ prompt.company_name }}
       </p>
-    </div>
-
-    <div class="absolute bottom-4 right-4">
       <NuxtLink
         v-bind:to="'/browse/' + prompt.id"
-        class="text-sm py-1 px-2 bg-teal-700 text-white rounded-lg"
+        class="text-sm py-1 px-2 bg-blue-600 text-white rounded-lg"
       >
         Details
       </NuxtLink>
@@ -87,12 +102,6 @@ async function copy() {
 </template>
 
 <style scoped>
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-}
 
 .line-clamp-2 {
   display: -webkit-box;
@@ -101,7 +110,7 @@ async function copy() {
   overflow: hidden;
 }
 
-.line-clamp-7 {
+.line-clamp-4 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 7;
@@ -111,40 +120,12 @@ async function copy() {
 button:focus {
   outline: none;
 }
+
+.hover\:shadow-lg:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.transition-shadow {
+  transition: box-shadow 0.2s ease-in-out;
+}
 </style>
-
-<script>
-export default {
-  props: ['prompt', 'my'],
-  data() {
-    return {
-      fullTextVisible: false,
-      copySuccess: false,
-      copyButtonText: 'Copy',
-    };
-  },
-  computed: {
-    copyButtonClass() {
-      return this.copySuccess
-        ? 'bg-green-500 text-white'
-        : 'bg-indigo-500 text-white';
-    },
-  },
-  methods: {
-    toggleTextOverflow() {
-      this.fullTextVisible = !this.fullTextVisible;
-    },
-    copy() {
-      // ... 复制内容的方法
-      this.copySuccess = true;
-      this.copyButtonText = '✔️ Copied';
-
-      setTimeout(() => {
-        this.copySuccess = false;
-        this.copyButtonText = 'Copy';
-      }, 2000);
-    },
-    // ... 其他方法
-  },
-};
-</script>
