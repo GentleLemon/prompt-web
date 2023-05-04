@@ -23,11 +23,13 @@ python3.10 -m venv venv
 source venv/bin/activate  
 
 升级pip  
-sudo apt install python3-pip
-pip install --upgrade pip
+sudo apt install python3-pip  
+pip install --upgrade pip  
+pip install --upgrade Django djangorestframework django-cors-headers djoser
 
 安装依赖  
 pip install -r requirements.txt
+pip freeze > requirements.txt
 
 ## 后端服务
 cd prompt_backend  
