@@ -10,11 +10,14 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class PromptSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
+
     class Meta:
         model = Prompt
         fields = (
             'id',
             'title',
+            'category',
             'description',
             'position_salary',
             'position_location',

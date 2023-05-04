@@ -1,40 +1,32 @@
 <script setup>
- const { data: prompts } = await useFetch('http://127.0.0.1:8000/api/v1/prompts/newest/')
+import Prompt from "~/components/prompt/prompt.vue";
+const { data: prompts } = await useFetch('http://127.0.0.1:8000/api/v1/prompts/newest/');
 </script>
 
 <template>
-    <div>
-        <div class="py-20 px-6 bg-teal-700 text-center">
-            <h1 class="mb-12 text-5xl text-white">优秀的ChatGPT提示</h1>
+  <v-main>
+    <v-container fluid class="py-20 text-center" color="teal darken-3" text-color="white">
+      <h1 class="mb-12 text-5xl">优秀的ChatGPT提示</h1>
 
-            <NuxtLink to="/browse" class="inline-block py-4 px-8 bg-teal-900 text-white rounded-xl">Browse</NuxtLink>
-<!--            <NuxtLink to="/about" class="inline-block py-4 px-8 bg-teal-900 text-white rounded-xl">About</NuxtLink>-->
-        </div>
+      <v-btn to="/browse" outlined rounded class="mx-2">Browse</v-btn>
+      <!--<v-btn to="/about" outlined rounded class="mx-2">About</v-btn>-->
+    </v-container>
 
-        <div class="py-10 px-6">
-            <h2 class="mb-8 text-2xl text-center">最常用的提示</h2>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <Prompt
-                    v-for="prompt in prompts"
-                    v-bind:key="prompt.id"
-                    v-bind:prompt="prompt"
-                    class="prompt-container"
-                >
-                    <div class="space-y-4 h-full">
-                        <!-- Any additional content or elements you want to include within the Prompt component -->
-                    </div>
-                </Prompt>
-            </div>
-        </div>
-
-    </div>
+    <v-container fluid class="py-10 px-6">
+      <h2 class="mb-8 text-2xl text-center">最常用的提示</h2>
+      <v-row>
+        <v-col cols="12" sm="6" md="4" lg="3" v-for="prompt in prompts" :key="prompt.id">
+          <Prompt :prompt="prompt" class="prompt-container">
+          </Prompt>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
-
 
 <style scoped>
 .prompt-container {
-    width: 100%;
-    height: 300px;
+  width: 100%;
+  height: 300px;
 }
 </style>
