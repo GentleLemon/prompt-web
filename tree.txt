@@ -1,0 +1,37 @@
+.
+├── LICENSE
+├── README.md
+├── img
+│ ├── backend_01.png
+│ └── frontend_01.png
+├── prompt_backend
+│ ├── db.sqlite3
+│ ├── manage.py
+│ ├── prompt
+│ └── prompt_backend
+├── prompt_frontend
+│ ├── README.md
+│ ├── app.vue
+│ ├── assets
+│ ├── components
+│ ├── layouts
+│ ├── node_modules
+│ ├── nuxt.config.ts
+│ ├── package-lock.json
+│ ├── package.json
+│ ├── pages
+│ ├── public
+│ ├── stores
+│ ├── tailwind.config.js
+│ ├── tsconfig.json
+│ └── yarn.lock
+├── requirements.txt
+├── todolist.txt
+├── tree.txt
+├── untils
+│ └── tree.py
+└── venv
+    ├── bin
+    ├── include
+    ├── lib
+    └── pyvenv.cfg
